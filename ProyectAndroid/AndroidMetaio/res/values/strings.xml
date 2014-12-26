@@ -1,0 +1,8 @@
+<resources>
+
+    <string name="app_name">AndroidMetaio</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="metaioSDKSignature">fATHtuYuVAi1IpawQ6m57N8MvdcDtYjBbhnKqC7PkKg=</string>
+
+</resources>

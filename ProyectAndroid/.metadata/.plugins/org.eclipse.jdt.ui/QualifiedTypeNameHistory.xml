@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+<fullyQualifiedTypeName name="android.com.prueba_zxing.R"/>
+<fullyQualifiedTypeName name="android.view.View"/>
+<fullyQualifiedTypeName name="android.content.Intent"/>
+<fullyQualifiedTypeName name="android.util.Log"/>
+<fullyQualifiedTypeName name="android.widget.TextView"/>
+<fullyQualifiedTypeName name="com.metaio.tools.SystemInfo"/>
+<fullyQualifiedTypeName name="android.support.v7.appcompat.R"/>
+<fullyQualifiedTypeName name="com.cancunet.cancunetqrcode.BuildConfig"/>
+<fullyQualifiedTypeName name="com.cancunet.cancunetqrcode.R"/>
+</qualifiedTypeNameHistroy>

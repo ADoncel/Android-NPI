@@ -1,0 +1,5 @@
+com.android.ide.eclipse.ddms.useAdbHost=true
+ddms.logcat.auotmonitor.level=error
+ddms.logcat.automonitor=false
+ddms.logcat.automonitor.userprompt=true
+eclipse.preferences.version=1
