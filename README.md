@@ -1,7 +1,7 @@
 QRReader
 ======
 
-Lector de codigos QR.
+Lector de códigos QR.
 
 © Antonio Doncel Campos, Hugo Lupión Fernández.
 
