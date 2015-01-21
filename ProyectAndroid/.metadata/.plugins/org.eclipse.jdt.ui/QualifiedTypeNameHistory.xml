@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-<fullyQualifiedTypeName name="android.com.prueba_zxing.R"/>
-<fullyQualifiedTypeName name="android.view.View"/>
-<fullyQualifiedTypeName name="android.content.Intent"/>
-<fullyQualifiedTypeName name="android.util.Log"/>
-<fullyQualifiedTypeName name="android.widget.TextView"/>
-<fullyQualifiedTypeName name="com.metaio.tools.SystemInfo"/>
-<fullyQualifiedTypeName name="android.support.v7.appcompat.R"/>
-<fullyQualifiedTypeName name="com.cancunet.cancunetqrcode.BuildConfig"/>
-<fullyQualifiedTypeName name="com.cancunet.cancunetqrcode.R"/>
+<fullyQualifiedTypeName name="com.tg.androidpatternlock.LockView"/>
+<fullyQualifiedTypeName name="com.tg.androidpatternlock.LockView.WorkMode"/>
+<fullyQualifiedTypeName name="com.tg.androidpatternlock.LockView.PatternListener"/>
+<fullyQualifiedTypeName name="com.tg.androidpatternlock.LockView.PatternPasswordStorageFetcher"/>
+<fullyQualifiedTypeName name="android.R"/>
+<fullyQualifiedTypeName name="com.viyu.lockpattern.LockPatternView.OnPatternListener"/>
+<fullyQualifiedTypeName name="com.meatio.androidmetaio.LockPatternView.Cell"/>
+<fullyQualifiedTypeName name="com.meatio.androidmetaio.LockPatternView.OnPatternListener"/>
+<fullyQualifiedTypeName name="com.meatio.androidmetaio.QReader.MetaioSDKCallbackHandler"/>
+<fullyQualifiedTypeName name="com.metaio.sdk.jni.IMetaioSDK"/>
+<fullyQualifiedTypeName name="android.app.AlertDialog"/>
+<fullyQualifiedTypeName name="android.content.DialogInterface"/>
 </qualifiedTypeNameHistroy>

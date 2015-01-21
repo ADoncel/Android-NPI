@@ -22,15 +22,26 @@
 
 package com.meatio.androidmetaio;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.SystemClock;
+import android.view.MotionEvent;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.metaio.sdk.ARViewActivity;
 import com.metaio.sdk.MetaioDebug;
 import com.metaio.sdk.jni.IGeometry;
+import com.metaio.sdk.jni.IMetaioSDK;
 import com.metaio.sdk.jni.IMetaioSDKCallback;
+import com.metaio.sdk.jni.IRadar;
+import com.metaio.sdk.jni.LLACoordinate;
 import com.metaio.sdk.jni.TrackingValues;
 import com.metaio.sdk.jni.TrackingValuesVector;
+import com.metaio.tools.io.AssetsManager;
 
 
 
@@ -39,6 +50,13 @@ public class QReader extends ARViewActivity{
      * Texto donde se visualizará la información del QR
      */
     private TextView mText;
+    private double latitud_num;
+    private double longitud_num;
+    private double latitud_des;
+    private double longitud_des;
+    GPSActivity gpsA;
+	private IRadar mRadar;
+	private AlertDialog mAlert;
 
     @Override
     public void onCreate(Bundle savedInstanceState) 
@@ -46,6 +64,7 @@ public class QReader extends ARViewActivity{
         super.onCreate(savedInstanceState);
         mText = new TextView(this);
         mGUIView = mText;
+        mRadar = metaioSDK.createRadar();
     }
 
     @Override
@@ -104,16 +123,137 @@ public class QReader extends ARViewActivity{
                 {   
                     final String[] tokens = v.getAdditionalValues().split("::");
                     if (tokens.length > 1)
-                    {
-                        displayText("QR Code detected: "+tokens[1]);
+                    {                        
+                        String direccion = tokens[1];
+                        String latitud = "", longitud = "";
+                        int cont = 0;
+                        boolean num = false;
+                        for(int i = 0; i < direccion.length(); i++){
+                        	if(num){
+                        		if(direccion.charAt(i) == '_'){
+                            		cont++;
+                            		num = false;
+                            	}
+                        		else{
+                        			if(cont == 1)
+                        				latitud += direccion.charAt(i);
+                        			else
+                        				longitud += direccion.charAt(i);
+                        		}
+                        	}
+                        	else if(direccion.charAt(i) == '_'){
+                        		cont++;
+                        		num = true;
+                        	}
+                        }
+                        
+                        try {
+				    		latitud_num = Double.parseDouble(latitud);
+				    		longitud_num = Double.parseDouble(longitud);
+				    		displayText("Latitud: "+latitud_num+" Longitud: "+longitud_num);
+						} catch (Exception e) {}
+                        
+                        runOnUiThread(new Runnable() {
+	                        @Override
+	                        public void run() {
+	                            if (mAlert == null) {
+	                                mAlert = new AlertDialog.Builder(QReader.this)
+	                                        .setTitle("Scanned QR-Code")
+	                                        .setMessage(tokens[1])
+	                                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+	
+	                                            @Override
+	                                            public void onClick(DialogInterface dialog, int which) {
+	                                            	gpsA = new GPSActivity(QReader.this);
+
+	                                                // check if GPS enabled     
+	                                                if(gpsA.canGetLocation()){
+	                                                     
+	                                                    double latitude = gpsA.getLatitude();
+	                                                    double longitude = gpsA.getLongitude();
+	                                                     
+	                                                    if(latitud_num != 0 && longitud_num != 0){	            		
+	                                                		String url = "http://maps.google.com/maps?saddr="+latitude+","+longitude+
+	                                                												"&daddr="+latitud_num+","+longitud_num;
+	                                                		Intent intent = new Intent(android.content.Intent.ACTION_VIEW, Uri.parse(url));
+	                                                		intent.setClassName("com.google.android.apps.maps", "com.google.android.maps.MapsActivity");
+	                                                		startActivity(intent);
+	                                                    }
+	                                                    Toast.makeText(getApplicationContext(), "Your Location is - \nLat: " + latitude + "\nLong: " + longitude, Toast.LENGTH_LONG).show();    
+	                                                }else{
+	                                                    // can't get location
+	                                                    // GPS or Network is not enabled
+	                                                    // Ask user to enable GPS/network in settings
+	                                                    gpsA.showSettingsAlert();
+	                                                }
+	                                            }
+	                                        })
+	                                        .create();
+	                            }
+	                            if (!mAlert.isShowing()) {
+	                                mAlert.setMessage(tokens[1]);
+	                                mAlert.show();
+	                            }
+	                        }
+	                    });
                     }
                 }
             }
-        }
-
+        }        
     }
+    
+    /*public boolean onSingleTapConfirmed(MotionEvent e) {
+    	// create class object
+        gpsA = new GPSActivity(QReader.this);
+
+        // check if GPS enabled     
+        if(gpsA.canGetLocation()){
+             
+            double latitude = gpsA.getLatitude();
+            double longitude = gpsA.getLongitude();
+             
+            if(latitud_num != 0 && longitud_num != 0){	            		
+        		String url = "http://maps.google.com/maps?saddr="+latitud_des+","+longitud_des+
+        												"&daddr="+latitud_num+","+longitud_num;
+        		Intent intent = new Intent(android.content.Intent.ACTION_VIEW, Uri.parse(url));
+        		intent.setClassName("com.google.android.apps.maps", "com.google.android.maps.MapsActivity");
+        		startActivity(intent);
+            }
+            Toast.makeText(getApplicationContext(), "Your Location is - \nLat: " + latitude + "\nLong: " + longitude, Toast.LENGTH_LONG).show();    
+        }else{
+            // can't get location
+            // GPS or Network is not enabled
+            // Ask user to enable GPS/network in settings
+            gpsA.showSettingsAlert();
+        }
+		return false;
+	}*/
 
 	@Override
-	protected void onGeometryTouched(IGeometry geometry) {		
+	protected void onGeometryTouched(final IGeometry geometry) {	
+		/*MetaioDebug.log("Geometry selected: "+geometry);
+		
+		mSurfaceView.queueEvent(new Runnable(){
+			@Override
+			public void run(){
+				mRadar.setObjectsDefaultTexture(AssetsManager.getAssetPath(getApplicationContext(), 
+						"TutorialLocationBasedAR/Assets/yellow.png"));
+				mRadar.setObjectTexture(geometry, AssetsManager.getAssetPath(getApplicationContext(),
+						"TutorialLocationBasedAR/Assets/red.png"));
+			}
+		});
+		
+		LLACoordinate pos = geometry.getTranslationLLA();
+		longitud_des = pos.getLongitude();
+		latitud_des = pos.getLatitude();
+		
+		long downTime = SystemClock.uptimeMillis();
+        long evenTime = SystemClock.uptimeMillis() + 100;
+        float x = 35.407104f;
+        float y = 378.52066f;
+        int metaState = 0;
+		
+		MotionEvent me = MotionEvent.obtain(downTime, evenTime,MotionEvent.ACTION_DOWN, x, y, metaState);
+        onSingleTapConfirmed(me);*/
 	}
 }
