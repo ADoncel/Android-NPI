@@ -1,0 +1,86 @@
+/*
+ *  Copyright (C) 2014, 2015 - Antonio Doncel Campos <adoncel@correo.ugr.es>, Hugo Mario Lupión Fernández <hugolupionfernandez@correo.ugr.es>
+ *
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+package AntonioDoncel_HugoLupion_Multiaplicacion;
+
+public class ComprobarDireccion {
+	
+	public PuntoCardinal direccion;
+	private float tolerancia;
+	
+	/**
+	 * Comprueba la dirección
+	 */
+	public ComprobarDireccion(){
+		this.direccion = null;
+		this.tolerancia = 0.05f;
+	}
+	
+	/**
+	 * Comprueba la dirección pasandole un punto cardinal
+	 * @param dir
+	 */
+	public ComprobarDireccion(PuntoCardinal dir){
+		this.direccion = dir;
+		this.tolerancia = 0.05f;
+	}
+	
+	/**
+	 * Comprueba la dirección pasandole un punto cardinal y la tolerancia
+	 * @param dir
+	 * @param tol
+	 */
+	public ComprobarDireccion(PuntoCardinal dir, float tol){
+		this.direccion = dir;
+		this.tolerancia = tol;
+	}
+	
+	/**
+	 * Establece la tolerancia
+	 * @param tol
+	 */
+	public void setTolerancia(float tol){
+		this.tolerancia = tol;
+	}
+	
+	/**
+	 * Establece el punto cardinal
+	 * @param dir
+	 */
+	public void setDireccion(PuntoCardinal dir){
+		this.direccion = dir;
+	}
+	
+	/**
+	 * Comprueba la direccion correcta, devolviendo true o false
+	 * @param punto
+	 * @param angulo
+	 * @return
+	 */
+	public boolean direccionCorrecta(PuntoCardinal punto, float angulo){
+		boolean retorno = false;
+		
+		float correcto = (float) punto.angulo() * 1.0f;
+		float inf = (float) angulo * (1.0f - this.tolerancia);
+		float sup = (float) angulo * (1.0f + this.tolerancia);
+		
+		if(correcto >= inf && correcto <= sup){
+			retorno = true;
+		}
+		
+		return retorno;
+	}
+}

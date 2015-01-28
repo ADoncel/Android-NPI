@@ -1,0 +1,103 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center_vertical|center_horizontal"
+    tools:context="com.meatio.androidmetaio.Brujula" 
+    android:background="@drawable/fondobrujula">
+
+    <ImageButton
+        android:id="@+id/O_Button"
+        android:layout_width="49dp"
+        android:layout_height="50dp"
+        android:background="@drawable/o"
+        android:onClick="onClickO_Button" />
+
+    <LinearLayout
+        android:id="@+id/Internos"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical|center_horizontal"
+        android:orientation="vertical" >
+
+        <ImageButton
+            android:id="@+id/N_Button"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@drawable/n"
+            android:onClick="onClickN_Button" />
+
+        <RelativeLayout
+            android:layout_width="208dp"
+            android:layout_height="392dp" >
+
+            <ImageView
+                android:id="@+id/Aguja"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_margin="50dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="10dp"
+                android:src="@drawable/aguja" />
+
+            <ImageButton
+                android:id="@+id/NE_Button"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_alignParentBottom="false"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:background="@drawable/ne"
+                android:onClick="onClickNE_Button" />
+
+            <ImageButton
+                android:id="@+id/SO_Button"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentRight="false"
+                android:layout_alignParentTop="false"
+                android:background="@drawable/so"
+                android:onClick="onClickSO_Button" />
+
+            <ImageButton
+                android:id="@+id/SE_Button"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_alignParentBottom="true"
+                android:layout_alignParentRight="true"
+                android:background="@drawable/se"
+                android:onClick="onClickSE_Button" />
+
+            <ImageButton
+                android:id="@+id/NO_Button"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_alignParentBottom="false"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentRight="false"
+                android:layout_alignParentTop="true"
+                android:layout_alignTop="@id/NE_Button"
+                android:background="@drawable/no"
+                android:onClick="onClickNO_Button" />
+        </RelativeLayout>
+
+        <ImageButton
+            android:id="@+id/S_Button"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/s"
+            android:onClick="onClickS_Button" />
+    </LinearLayout>
+
+    <ImageButton
+        android:id="@+id/E_Button"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:background="@drawable/e"
+        android:onClick="onClickE_Button" />
+
+</LinearLayout>
